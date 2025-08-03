@@ -3,6 +3,11 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use App\Core\MyCoredata;
+use App\Models\SitesettingsModel;
+use App\Models\UserModel;
+use App\Models\DashboardModel;
+
 
 /**
  * Services Configuration file.
@@ -29,4 +34,44 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+
+    public static function coredata(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('coredata');
+        }
+
+        return new MyCoredata();
+    }
+
+    public static function sitesettingsModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('sitesettingsModel');
+        }
+
+        return new SitesettingsModel();
+    }
+
+
+    public static function userModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('userModel');
+        }
+
+        return new UserModel();
+    }
+
+    public static function dashboardModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('dashboardModel');
+        }
+
+        return new DashboardModel();
+    }
+
+
 }

@@ -27,9 +27,9 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => '',
+        'username'     => 'root',
         'password'     => '',
-        'database'     => '',
+        'database'     => 'deotPos',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -192,12 +192,21 @@ class Database extends Config
     public function __construct()
     {
         parent::__construct();
+                $this->defaultGroup = 'default';
 
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
-        if (ENVIRONMENT === 'testing') {
-            $this->defaultGroup = 'tests';
-        }
+        // switch (ENVIRONMENT) {
+        //     case 'testing':
+        //         $this->defaultGroup = 'tests';
+        //         break;
+
+        //     case 'production':
+        //         $this->defaultGroup = 'production';
+        //         break;
+
+        //     default:
+        //         $this->defaultGroup = 'default'; // development/local
+        //         break;
+        // }
     }
+
 }
