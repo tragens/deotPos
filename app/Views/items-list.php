@@ -6,7 +6,7 @@
 <?php include"comman/code_css_datatable.php"; ?>
 
 <!-- Lightbox -->
-<link rel="stylesheet" href="<?php echo $theme_link; ?>plugins/lightbox/ekko-lightbox.css">
+<link rel="stylesheet" href="<?= base_url('theme/plugins/lightbox/ekko-lightbox.css')?>">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -25,14 +25,14 @@
         <small>View/Search Items</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?php echo $base_url; ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active"><?=$page_title;?></li>
       </ol>
     </section>
 
     <!-- Main content -->
-    <?= form_open('#', array('class' => '', 'id' => 'table_form')); ?>
-    <input type="hidden" id='base_url' value="<?=$base_url;?>">
+    <?php //= //form_open('#', array('class' => '', 'id' => 'table_form')); ?>
+    <input type="hidden" id='base_url' value="<?= base_url() ;?>">
 
     <section class="content">
       <div class="row">
@@ -45,7 +45,7 @@
               <div class="row">
                     <div class="col-md-12">
                     <div class="col-md-3">
-                        <label for="brand_id" class=" control-label"><?= $this->lang->line('brand'); ?></label>
+                        <label for="brand_id" class=" control-label"><?= lang('app.brand'); ?></label>
                           <select class="form-control select2" id="brand_id" name="brand_id"  style="width: 100%;">
                             <?php
                                $query1="select * from db_brands where status=1";
@@ -67,7 +67,7 @@
                          </select>
                     </div>
                     <div class="col-md-3">
-                        <label for="category_id" class=" control-label"><?= $this->lang->line('category'); ?></label>
+                        <label for="category_id" class=" control-label"><?= lang('app.category'); ?></label>
                           <select class="form-control select2" id="category_id" name="category_id"  style="width: 100%;">
                             <?php
                                $query1="select * from db_category where status=1";
@@ -95,7 +95,7 @@
               <?php if($CI->permissions('items_add')) { ?>
               <div class="box-tools">
                 <a class="btn btn-block btn-info " href="<?php echo $base_url; ?>items/add">
-                <i class="fa fa-plus " ></i> <?= $this->lang->line('new_item'); ?></a>
+                <i class="fa fa-plus " ></i> <?= lang('app.new_item'); ?></a>
               </div>
              <?php } ?>
             </div>
@@ -107,19 +107,19 @@
                   <th class="text-center">
                     <input type="checkbox" class="group_check checkbox" >
                   </th>
-                  <th><?= $this->lang->line('image'); ?></th>
-                  <th><?= $this->lang->line('item_code'); ?></th>
-                  <th><?= $this->lang->line('item_name'); ?></th>
-                  <th><?= $this->lang->line('brand'); ?></th>
-                  <th><?= $this->lang->line('category'); ?></th>
-                  <th><?= $this->lang->line('unit'); ?></th>
-                  <th><?= $this->lang->line('stock_qty'); ?></th>
-                  <th><?= $this->lang->line('minimum_qty'); ?></th>
-                  <th><?= $this->lang->line('purchase_price'); ?></th>
-                  <th><?= $this->lang->line('final_sales_price'); ?></th>
-                  <th><?= $this->lang->line('tax'); ?></th>
-	         	  	  <th><?= $this->lang->line('status'); ?></th>
-                  <th><?= $this->lang->line('action'); ?></th>
+                  <th><?= lang('app.image'); ?></th>
+                  <th><?= lang('app.item_code'); ?></th>
+                  <th><?= lang('app.item_name'); ?></th>
+                  <th><?= lang('app.brand'); ?></th>
+                  <th><?= lang('app.category'); ?></th>
+                  <th><?= lang('app.unit'); ?></th>
+                  <th><?= lang('app.stock_qty'); ?></th>
+                  <th><?= lang('app.minimum_qty'); ?></th>
+                  <th><?= lang('app.purchase_price'); ?></th>
+                  <th><?= lang('app.final_sales_price'); ?></th>
+                  <th><?= lang('app.tax'); ?></th>
+	         	  	  <th><?= lang('app.status'); ?></th>
+                  <th><?= lang('app.action'); ?></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -152,7 +152,7 @@
 <!-- TABLES CODE -->
 <?php include"comman/code_js_datatable.php"; ?>
 <!-- Lightbox -->
-<script src="<?php echo $theme_link; ?>plugins/lightbox/ekko-lightbox.js"></script>
+<script src="<?= base_url('theme/plugins/lightbox/ekko-lightbox.js')?>"></script>
 <script type="text/javascript">
   $(document).on('click', '[data-toggle="lightbox"]', function(event) {
             event.preventDefault();
@@ -244,7 +244,7 @@ $("#brand_id,#category_id").on("change",function(){
 </script>
 
 
-<script src="<?php echo $theme_link; ?>js/items.js"></script>
+<script src="<?= base_url('theme/js/items.js')?>"></script>
 
 <!-- Make sidebar menu hughlighter/selector -->
 <script>$(".<?php echo basename(__FILE__,'.php');?>-active-li").addClass("active");</script>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Core\MyCoredata;
+use App\Libraries\MyCoredata;
 
 if (!function_exists('has_permission')) {
     function has_permission(string $permissionName): bool

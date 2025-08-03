@@ -2,6 +2,7 @@
 
 use Config\Database;
 use Config\Services;
+use App\Libraries\MyCoredata;
 
 if (!function_exists('demo_app')) {
     function demo_app(): bool {
@@ -308,4 +309,17 @@ if (!function_exists('permissions')) {
 
         return $count > 0;
     }
+
+    if (!function_exists('currency')) {
+        function currency(): bool
+        {
+            // Create an instance of your CustomHelper library
+            $perm = new MyCoredata();
+
+            // Call the permissions method
+            return $perm->currency();
+        }
+    }
+
+
 }

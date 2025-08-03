@@ -13,11 +13,13 @@ use CodeIgniter\I18n\Time;
 class DashboardModel extends Model
 {
     protected $db;
+    protected $coredata;
 
     public function __construct()
     {
         parent::__construct();
         $this->db = \Config\Database::connect();
+        $this->coredata = service('coredata');
     }
 
     private function getSum(string $table, string $column, array $where = []): float
@@ -84,7 +86,7 @@ class DashboardModel extends Model
             'tot_sal_grand_total'    => $tot_sal_grand_total - $tot_sales_return,
             'tot_exp'                => $tot_exp,
             'sales_due'              => $sales_due,
-            'purchase_due'           => $purchase_due,
+            'purchase_due'           => $this->coredata->currency($purchase_due),
             'today_payment_received' => $today_payment_received - $today_payment_paid,
             'todays_total_purchase'  => $todays_total_purchase,
             'todays_total_sales'     => $todays_total_sales - $todays_total_sales_return,

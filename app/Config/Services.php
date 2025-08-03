@@ -3,10 +3,13 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
-use App\Core\MyCoredata;
+use App\Libraries\MyCoredata;
 use App\Models\SitesettingsModel;
 use App\Models\UserModel;
 use App\Models\DashboardModel;
+use App\Models\ItemsModel;
+use App\Models\PurchaseModel;
+use App\Models\SalesModel;
 
 
 /**
@@ -71,6 +74,36 @@ class Services extends BaseService
         }
 
         return new DashboardModel();
+    }
+
+
+    public static function itemsModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('itemsModel');
+        }
+
+        return new ItemsModel();
+    }
+
+
+    public static function purchaseModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('purchaseModel');
+        }
+
+        return new PurchaseModel();
+    }
+
+
+    public static function salesModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('salesModel');
+        }
+
+        return new SalesModel();
     }
 
 

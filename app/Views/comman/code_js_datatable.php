@@ -127,8 +127,7 @@ $(document).ready(function () { setTimeout(function() {$( ".alert-dismissable" )
 </script>
 <script type="text/javascript">
   function round_off(input=0){
-    // < ?php if(is_enabled_round_off()){ ?>
-    <?php if(1==0){ ?>
+    <?php if(is_enabled_round_off()){ ?>
       return Math.round(input);
     <?php }else{?>
       return input;
@@ -137,8 +136,7 @@ $(document).ready(function () { setTimeout(function() {$( ".alert-dismissable" )
 </script>
 <script>
   function tax_disabled(){
-    <?php if(1==0){ ?>
-    // < ?php if(is_tax_disabled()){ ?>
+    <?php if(is_tax_disabled()){ ?>
       return true;
     <?php }else{?>
       return false;

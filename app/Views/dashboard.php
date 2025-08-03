@@ -70,8 +70,9 @@
              <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="ion ion-bag"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?= lang('total_purchase_due'); ?></span>
-                   <span class="info-box-number"><?php // $CI->currency(number_format($purchase_due, 2)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.total_purchase_due'); ?></span>
+                   <span class="info-box-number">
+                    <?= number_format($purchase_due, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -83,8 +84,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-dollar"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('total_sales_due'); ?></span>
-                   <span class="info-box-number"><?php // $CI->currency(app_number_format($sales_due)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.total_sales_due'); ?></span>
+                   <span class="info-box-number"><?= number_format($sales_due, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -95,8 +96,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-cart-plus"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('total_sales_amount'); ?></span>
-                   <span class="info-box-number"><?php // $CI->currency(app_number_format($tot_sal_grand_total)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.total_sales_amount'); ?></span>
+                   <span class="info-box-number"><?= number_format($tot_sal_grand_total, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -107,8 +108,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-red "><i class="fa fa-minus-square-o"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('total_expense_amount'); ?></span>
-                     <span class="info-box-number"><?php // $CI->currency(app_number_format($tot_exp)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.total_expense_amount'); ?></span>
+                     <span class="info-box-number"><?= number_format($tot_exp, 2); ?></span>
                    </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -122,8 +123,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-aqua"><i class="ion ion-bag"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('todays_total_purchase'); ?></span>
-                   <span class="info-box-number"><?php // $CI->currency(app_number_format($todays_total_purchase)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.todays_total_purchase'); ?></span>
+                   <span class="info-box-number"><?= number_format($todays_total_purchase, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -134,8 +135,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-dollar"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('today_payment_received'); ?>(Sales)</span>
-                   <span class="info-box-number"><?php // $CI->currency(app_number_format($today_payment_received)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.today_payment_received'); ?>(Sales)</span>
+                   <span class="info-box-number"><?= number_format($today_payment_received, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -146,8 +147,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-green"><i class="fa fa-cart-plus"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('todays_total_sales'); ?></span>
-                   <span class="info-box-number"><?php // $CI->currency(app_number_format($todays_total_sales)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.todays_total_sales'); ?></span>
+                   <span class="info-box-number"><?= number_format($todays_total_sales, 2); ?></span>
                 </div>
                 <!-- /.info-box-content -->
              </div>
@@ -158,8 +159,8 @@
              <div class="info-box">
                 <span class="info-box-icon bg-red "><i class="fa fa-minus-square-o"></i></span>
                 <div class="info-box-content">
-                   <span class="text-bold text-uppercase"><?php // $this->lang->line('todays_total_expense'); ?></span>
-                     <span class="info-box-number"><?php // $CI->currency(app_number_format($todays_total_expense)); ?></span>
+                   <span class="text-bold text-uppercase"><?= lang('app.todays_total_expense'); ?></span>
+                     <span class="info-box-number"><?= number_format($todays_total_expense, 2); ?></span>
                    </span>
                 </div>
                 <!-- /.info-box-content -->
@@ -174,13 +175,13 @@
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-dream-pink">
             <div class="inner text-uppercase">
-              <h3><?php // $tot_cust;?></h3><p><?php // $this->lang->line('customers'); ?></p>
+              <h3><?= $tot_cust;?></h3><p><?= lang('app.customers'); ?></p>
             </div>
             <div class="icon">
               <i class="fa fa-group "></i>
             </div>
             <?php if($session->get('inv_userid')==1){ ?> 
-            <a href="<?php // base_url('customers') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
+            <a href="<?= base_url('customers') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
           </a>
           <?php } ?>
           </div>
@@ -188,13 +189,13 @@
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-dream-purple">
             <div class="inner text-uppercase">
-              <h3><?php // $tot_sup;?></h3><p><?php // $this->lang->line('suppliers'); ?></p>
+              <h3><?= $tot_sup;?></h3><p><?= lang('app.suppliers'); ?></p>
             </div>
             <div class="icon">
               <i class="fa fa-group "></i>
             </div>
             <?php if($session->get('inv_userid')==1){ ?> 
-            <a href="<?php // base_url('suppliers') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
+            <a href="<?= base_url('suppliers') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
           </a>
           <?php } ?>
           </div>
@@ -202,13 +203,13 @@
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-dream-maroon">
             <div class="inner text-uppercase">
-              <h3><?php // $tot_pur;?></h3><p><?php // $this->lang->line('purchase_invoice'); ?></p>
+              <h3><?= $tot_pur;?></h3><p><?= lang('app.purchase_invoice'); ?></p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-paper-outline"></i>
             </div>
             <?php if($session->get('inv_userid')==1){ ?> 
-            <a href="<?php // base_url('purchase') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
+            <a href="<?= base_url('purchase') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
           </a>
           <?php } ?>
           </div>
@@ -216,13 +217,13 @@
         <div class="col-lg-3 col-xs-6">
           <div class="small-box bg-dream-green">
             <div class="inner text-uppercase">
-              <h3><?php // $tot_sal;?></h3><p><?php // $this->lang->line('sales_invoice'); ?></p>
+              <h3><?= $tot_sal;?></h3><p><?= lang('app.sales_invoice'); ?></p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-paper-outline"></i>
             </div>
             <?php if($session->get('inv_userid')==1){ ?> 
-            <a href="<?php // base_url('sales') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
+            <a href="<?= base_url('sales') ?>" class="small-box-footer text-uppercase">View <i class="fa fa-arrow-circle-right"></i>
           </a>
           <?php } ?>
           </div>
@@ -240,7 +241,7 @@
       <!-- BAR CHART -->
           <div class="box box-success">
             <div class="box-header with-border">
-              <h3 class="box-title text-uppercase"><?php // $this->lang->line('purchase_and_sales_bar_chart'); ?></h3>
+              <h3 class="box-title text-uppercase"><?= lang('app.purchase_and_sales_bar_chart'); ?></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -264,7 +265,7 @@
           <!-- PRODUCT LIST -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title text-uppercase"><?php // $this->lang->line('recently_added_items'); ?></h3>
+              <h3 class="box-title text-uppercase"><?= lang('app.recently_added_items'); ?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -273,23 +274,19 @@
                       <table class="table table-bordered table-responsive">
                         <tr class='bg-blue'>
                           <td>Sl.No</td>
-                          <td><?php // $this->lang->line('item_name'); ?></td>
-                          <td><?php // $this->lang->line('item_sales_price'); ?></td>
+                          <td><?= lang('app.item_name'); ?></td>
+                          <td><?= lang('app.item_sales_price'); ?></td>
                         </tr>
                         <tbody>
                 <?php
-                    // $i=1;
-                    // $qs5="SELECT item_name,sales_price FROM db_items where status=1 ORDER BY id desc limit 5";
-                    // $q5=$this->db->query($qs5);
-                    // if($q5->num_rows() >0){
-                    if(1 === 0){
-                      
-                      foreach($q5->result() as $res5){
+                    if($recently_added_items){
+                      $i=1;
+                      foreach($recently_added_items as $res5){
                         ?>
                         <tr>
                           <td><?php echo $i++; ?></td>
-                          <td><?php echo $res5->item_name; ?></td>
-                          <td><?php echo $CI->currency($res5->sales_price,$with_comma=true); ?></td>
+                          <td><?php echo $res5['item_name']; ?></td>
+                          <td><?php echo currency($res5['sales_price'],$with_comma=true); ?></td>
                         </tr>
                         
                         <?php
@@ -300,7 +297,7 @@
                     <?php if($session->get('inv_userid')==1){ ?> 
                       <tfoot>
                       <tr>
-                        <td colspan="3" class="text-center"><a href="<?=base_url('items')?>" class="uppercase"><?php // $this->lang->line('view_all'); ?></a></td>
+                        <td colspan="3" class="text-center"><a href="<?=base_url('items')?>" class="uppercase"><?= lang('app.view_all'); ?></a></td>
                       </tr>
                     </tfoot>
                     <?php } ?>
@@ -326,7 +323,7 @@
      <div class="col-md-6">
           <div class="box box-primary">
             <div class="box-header">
-              <h3 class="box-title text-uppercase"><?php // $this->lang->line('expired_items'); ?></h3>
+              <h3 class="box-title text-uppercase"><?= lang('app.expired_items'); ?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -334,27 +331,24 @@
                 <thead>
                 <tr class='bg-blue'>
                   <th>#</th>
-                  <th><?php // $this->lang->line('item_code'); ?></th>
-                  <th><?php // $this->lang->line('item_name'); ?></th>
-                  <th><?php // $this->lang->line('category_name'); ?></th>
-                  <th><?php // $this->lang->line('expire_date'); ?></th>
+                  <th><?= lang('app.item_code'); ?></th>
+                  <th><?= lang('app.item_name'); ?></th>
+                  <th><?= lang('app.category_name'); ?></th>
+                  <th><?= lang('app.expire_date'); ?></th>
                 </tr>
                 </thead>
                 <tbody>
         <?php
-        // $qs6="SELECT a.item_name,a.item_code,b.category_name,a.expire_date from db_items as a,db_category as b where b.id=a.category_id and a.expire_date<='".date("Y-m-d")."' and a.status=1 limit 10";
-        // $q6=$this->db->query($qs6);
-       
-        // if($q6->num_rows()>0){
-        if(1 == 0){
+
+        if($expired_items){
           $i=1;
-          foreach ($q6->result() as $row){
+          foreach ($expired_items as $row){
             echo "<tr>";
             echo "<td>".$i++."</td>";
-            echo "<td>".$row->item_code."</td>";
-            echo "<td>".$row->item_name."</td>";
-            echo "<td>".$row->category_name."</td>";
-            echo "<td>".show_date($row->expire_date)."</td>";
+            echo "<td>".$row['item_code']."</td>";
+            echo "<td>".$row['item_name']."</td>";
+            echo "<td>".$row['category_name']."</td>";
+            echo "<td>".show_date($row['expire_date'])."</td>";
             echo "</tr>";
           }
         }
@@ -363,7 +357,7 @@
                 </tbody>
                  <tfoot>
                       <tr>
-                        <td colspan="5" class="text-center"><a href="<?php //base_url('reports/expired_items'); ?>" class="uppercase"><?php // $this->lang->line('view_all'); ?></a></td>
+                        <td colspan="5" class="text-center"><a href="<?php base_url('reports/expired_items'); ?>" class="uppercase"><?= lang('app.view_all'); ?></a></td>
                       </tr>
                     </tfoot>
               </table>
@@ -377,7 +371,7 @@
         <div class="col-md-6">
           <div class="box box-primary">
             <div class="box-header">
-              <h3 class="box-title text-uppercase"><?php // $this->lang->line('stock_alert'); ?></h3>
+              <h3 class="box-title text-uppercase"><?= lang('app.stock_alert'); ?></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -385,30 +379,21 @@
                 <thead>
                 <tr class='bg-blue'>
                   <th>#</th>
-                  <th><?php // $this->lang->line('item_name'); ?></th>
-                  <th><?php // $this->lang->line('category_name'); ?></th>
-                  <th><?php // $this->lang->line('stock'); ?></th>
+                  <th><?= lang('app.item_name'); ?></th>
+                  <th><?= lang('app.category_name'); ?></th>
+                  <th><?= lang('app.stock'); ?></th>
                 </tr>
                 </thead>
                 <tbody>
         <?php
-        // $this->db->select('b.category_name,a.item_name,a.stock');
-        // $this->db->from('db_items a');
-        // $this->db->where('a.stock<=a.alert_qty and a.status=1');
-        // $this->db->join('db_category b','b.id=a.category_id','left');
-        // $this->db->order_by("a.id","desc");
-        // $this->db->limit("10");
-        // $q4=$this->db->get();
-       
-        // if($q4->num_rows()>0){
-        if (1 == 0){
+        if ($stock_alert){
           $i=1;
-          foreach ($q4->result() as $row){
+          foreach ($stock_alert as $row){
             echo "<tr>";
             echo "<td>".$i++."</td>";
-            echo "<td>".$row->item_name."</td>";
-            echo "<td>".$row->category_name."</td>";
-            echo "<td>".$row->stock."</td>";
+            echo "<td>".$row['item_name']."</td>";
+            echo "<td>".$row['category_name']."</td>";
+            echo "<td>".$row['stock']."</td>";
             echo "</tr>";
           }
         }
@@ -417,7 +402,7 @@
                 </tbody>
                 <tfoot>
                       <tr>
-                        <td colspan="4" class="text-center"><a href="<?php //base_url('reports/stock'); ?>" class="uppercase"><?php // $this->lang->line('view_all'); ?></a></td>
+                        <td colspan="4" class="text-center"><a href="<?php base_url('reports/stock'); ?>" class="uppercase"><?= lang('app.view_all'); ?></a></td>
                       </tr>
                     </tfoot>
                 
@@ -450,45 +435,38 @@
         $jan_pur=$feb_pur=$mar_pur=$apr_pur=$may_pur=$jun_pur=$jul_pur=$aug_pur=$sep_pur=$oct_pur=$nov_pur=$dec_pur=0;
         $jan_sal=$feb_sal=$mar_sal=$apr_sal=$may_sal=$jun_sal=$jul_sal=$aug_sal=$sep_sal=$oct_sal=$nov_sal=$dec_sal=0;
 
-        // $q1=$this->db->query("SELECT COALESCE(SUM(grand_total),0) AS pur_total,MONTH(purchase_date) AS purchase_date FROM db_purchase where purchase_status='Received' AND YEAR(purchase_date) = ".date('Y')."  GROUP BY MONTH(purchase_date) ");
-
-
-        // if($q1->num_rows() >0){
-        if(1 == 0){
-          foreach($q1->result() as $res1){
-            if($res1->purchase_date == '1'){ $jan_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '2'){ $feb_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '3'){ $mar_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '4'){ $apr_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '5'){ $may_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '6'){ $jun_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '7'){ $jul_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '8'){ $aug_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '9'){ $sep_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '10'){ $oct_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '11'){ $nov_pur = $res1->pur_total; }
-            else if($res1->purchase_date == '12'){ $dec_pur = $res1->pur_total; }
+        if($bar_chart){
+          foreach($bar_chart as $res1){
+            if($res1['purchase_date'] == '1'){ $jan_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '2'){ $feb_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '3'){ $mar_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '4'){ $apr_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '5'){ $may_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '6'){ $jun_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '7'){ $jul_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '8'){ $aug_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '9'){ $sep_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '10'){ $oct_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '11'){ $nov_pur = $res1['pur_total']; }
+            else if($res1['purchase_date'] == '12'){ $dec_pur = $res1['pur_total']; }
           }
         }
 
         //DONUS CHART
-
-        // $q2=$this->db->query("SELECT COALESCE(SUM(grand_total),0) AS sal_total,MONTH(sales_date) AS sales_date FROM db_sales where sales_status='Final' AND YEAR(sales_date) = ".date('Y')." GROUP BY MONTH(sales_date)");
-        // if($q2->num_rows() >0){
-        if(1 == 0){
-          foreach($q2->result() as $res2){
-            if($res2->sales_date == '1'){ $jan_sal = $res2->sal_total; }
-            else if($res2->sales_date == '2'){ $feb_sal = $res2->sal_total; }
-            else if($res2->sales_date == '3'){ $mar_sal = $res2->sal_total; }
-            else if($res2->sales_date == '4'){ $apr_sal = $res2->sal_total; }
-            else if($res2->sales_date == '5'){ $may_sal = $res2->sal_total; }
-            else if($res2->sales_date == '6'){ $jun_sal = $res2->sal_total; }
-            else if($res2->sales_date == '7'){ $jul_sal = $res2->sal_total; }
-            else if($res2->sales_date == '8'){ $aug_sal = $res2->sal_total; }
-            else if($res2->sales_date == '9'){ $sep_sal = $res2->sal_total; }
-            else if($res2->sales_date == '10'){ $oct_sal = $res2->sal_total; }
-            else if($res2->sales_date == '11'){ $nov_sal = $res2->sal_total; }
-            else if($res2->sales_date == '12'){ $dec_sal = $res2->sal_total; }
+        if($donus_chart){
+          foreach($donus_chart as $res2){
+            if($res2['sales_date'] == '1'){ $jan_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '2'){ $feb_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '3'){ $mar_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '4'){ $apr_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '5'){ $may_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '6'){ $jun_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '7'){ $jul_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '8'){ $aug_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '9'){ $sep_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '10'){ $oct_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '11'){ $nov_sal = $res2['sal_total']; }
+            else if($res2['sales_date'] == '12'){ $dec_sal = $res2['sal_total']; }
           }
         }
       ?>
@@ -561,7 +539,7 @@
       labels: ["January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"],
       datasets: [
         {
-          label: "Purchase Amt(in <?php // $CI->currency();?>)",
+          label: "Purchase Amt(in <?= currency() ?>)",
           fillColor: "rgba(210, 214, 222, 1)",
           strokeColor: "rgba(210, 214, 222, 1)",
           pointColor: "rgba(210, 214, 222, 1)",
@@ -571,7 +549,7 @@
           data: [<?php echo $jan_pur; ?>, <?php echo $feb_pur; ?>, <?php echo $mar_pur; ?>, <?php echo $apr_pur; ?>, <?php echo $may_pur; ?>, <?php echo $jun_pur; ?>, <?php echo $jul_pur; ?>, <?php echo $aug_pur; ?>, <?php echo $sep_pur; ?>, <?php echo $oct_pur; ?>, <?php echo $nov_pur; ?>, <?php echo $dec_pur; ?>]
         },
         {
-          label: "Sales Amt(in <?php // $CI->currency();?>)",
+          label: "Sales Amt(in <?= currency();?>)",
           fillColor: "rgba(60,141,188,0.9)",
           strokeColor: "rgba(60,141,188,0.8)",
           pointColor: "#3b8bba",
@@ -629,7 +607,7 @@
                  type: 'pie'
              },
              title: {
-                 text: '<?php // $this->lang->line('top_10_trending_items'); ?> %'
+                 text: '<?= lang('app.top_10_trending_items'); ?> %'
              },
              tooltip: {
                  /*pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'*/
@@ -654,13 +632,11 @@
                  data: [
                  <?php 
             //PIE CHART
-            // $q3=$this->db->query("SELECT COALESCE(SUM(b.sales_qty),0) AS sales_qty, a.item_name FROM db_items AS a, db_salesitems AS b ,db_sales AS c WHERE a.id=b.`item_id` AND b.sales_id=c.`id` AND c.`sales_status`='Final' GROUP BY a.id limit 10");
-           if(1==0){ 
-            // if($q3->num_rows() >0){
-              foreach($q3->result() as $res3){
+           if($pie_chart){ 
+              foreach($pie_chart as $res3){
                   //extract($res3);
-                  if($res3->sales_qty>0){
-                  echo "{name:'".$res3->item_name."', y:".$res3->sales_qty."},";
+                  if($res3['sales_qty']>0){
+                  echo "{name:'".$res3['item_name']."', y:".$res3['sales_qty']."},";
                   }
               }
             }

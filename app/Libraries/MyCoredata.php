@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core;
+namespace App\Libraries;
 use Config\Services;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 
