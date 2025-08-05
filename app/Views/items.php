@@ -18,37 +18,37 @@
       <div class="wrapper">
       <?php include"sidebar.php"; ?>
       <?php
-         if(!isset($item_name)){
-         $custom_barcode ='';
-         $item_name=$sku=$hsn=$opening_stock=$item_code=$brand_id=$category_id=$gst_percentage=$tax_type=
-         $sales_price=$purchase_price=$profit_margin=$unit_id=$price=$lot_number="";
-         $stock = 0;
-         $alert_qty= 0;
-         $expire_date ='';
-         $description ='';
-         $final_price ='';
-          $tax_id='';
-          $discount='';
-          $discount_type='Percentage';
+         // if(!isset($item_name)){
+         // $custom_barcode ='';
+         // $item_name=$sku=$hsn=$opening_stock=$item_code=$brand_id=$category_id=$gst_percentage=$tax_type=
+         // $sales_price=$purchase_price=$profit_margin=$unit_id=$price=$lot_number="";
+         // $stock = 0;
+         // $alert_qty= 0;
+         // $expire_date ='';
+         // $description ='';
+         // $final_price ='';
+         //  $tax_id='';
+         //  $discount='';
+         //  $discount_type='Percentage';
 
 
 
-          //Create items unique Number
-         $qs5="select item_init from db_company";
-         $q5=$this->db->query($qs5);
-         $item_init=$q5->row()->item_init;
+         //  //Create items unique Number
+         // $qs5="select item_init from db_company";
+         // $q5=$this->db->query($qs5);
+         // $item_init=$q5->row()->item_init;
          
-         $this->db->query("ALTER TABLE db_items AUTO_INCREMENT = 1");
-         $qs4="select coalesce(max(id),0)+1 as maxid from db_items";
-         $q1=$this->db->query($qs4);
-         $maxid=$q1->row()->maxid;
-         $item_code=$item_init.str_pad($maxid, 4, '0', STR_PAD_LEFT);
-         //end
+         // $this->db->query("ALTER TABLE db_items AUTO_INCREMENT = 1");
+         // $qs4="select coalesce(max(id),0)+1 as maxid from db_items";
+         // $q1=$this->db->query($qs4);
+         // $maxid=$q1->row()->maxid;
+         // $item_code=$item_init.str_pad($maxid, 4, '0', STR_PAD_LEFT);
+         // //end
 
 
-         }
-         $new_opening_stock ='';
-         $adjustment_note ='';
+         // }
+         // $new_opening_stock ='';
+         // $adjustment_note ='';
          ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -59,8 +59,8 @@
                <small>Add/Update Items</small>
             </h1>
             <ol class="breadcrumb">
-               <li><a href="<?php echo $base_url; ?>dashboard"><i class="fa fa-dashboard"></i>Home</a></li>
-               <li><a href="<?php echo $base_url; ?>items"><?= $this->lang->line('items_list'); ?></a></li>
+               <li><a href="<?= base_url('dashboard')?>"><i class="fa fa-dashboard"></i>Home</a></li>
+               <li><a href="<?= base_url('items')?>"><?= lang('app.items_list'); ?></a></li>
                <li class="active"><?= $page_title;?></li>
             </ol>
          </section>
@@ -74,20 +74,20 @@
                <div class="col-md-12">
                   <!-- Horizontal Form -->
                   <div class="box box-info ">
-                     
-                      <?= form_open('#', array('class' => 'form', 'id' => 'items-form', 'enctype'=>'multipart/form-data', 'method'=>'POST'));?>
-                        <input type="hidden" id="base_url" value="<?php echo $base_url;; ?>">
+                   <form action="#" id="items-form" method="post">
+                      <input type="hidden" class="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
+                        <input type="hidden" id="base_url" value="<?= base_url() ?>">
                         <div class="box-body">
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="item_code"><?= $this->lang->line('item_code'); ?><span class="text-danger">*</span></label>
+                                 <label for="item_code"><?= lang('app.item_code'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control" id="item_code" name="item_code" placeholder="" value="<?php print $item_code; ?>" >
                                  <span id="item_code_msg" style="display:none" class="text-danger"></span>
                               </div>
                            </div>
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="item_name"><?= $this->lang->line('item_name'); ?><span class="text-danger">*</span></label>
+                                 <label for="item_name"><?= lang('app.item_name'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control" id="item_name" name="item_name" placeholder="" value="<?php print $item_name; ?>" >
                                  <span id="item_name_msg" style="display:none" class="text-danger"></span>
                               </div>
@@ -96,14 +96,12 @@
                                  <div class="input-group">
                                  <select class="form-control select2" id="brand_id" name="brand_id"  style="width: 100%;"  >
                                     <?php
-                                       $query1="select * from db_brands where status=1";
-                                       $q1=$this->db->query($query1);
-                                       if($q1->num_rows($q1)>0)
+                                       if($brands)
                                         {  echo '<option value="">-Select-</option>'; 
-                                            foreach($q1->result() as $res1)
+                                            foreach($brands as $res1)
                                           { 
-                                            $selected = ($brand_id==$res1->id)? 'selected' : '';
-                                            echo "<option $selected value='".$res1->id."'>".$res1->brand_name."</option>";
+                                            $selected = ($brand_id==$res1['id'])? 'selected' : '';
+                                            echo "<option $selected value='".$res1['id']."'>".$res1['brand_name']."</option>";
                                           }
                                         }
                                         else
@@ -123,14 +121,12 @@
                                  <div class="input-group">
                                  <select class="form-control select2" id="category_id" name="category_id"  style="width: 100%;"  value="<?php print $category_id; ?>">
                                     <?php
-                                       $query1="select * from db_category where status=1";
-                                       $q1=$this->db->query($query1);
-                                       if($q1->num_rows($q1)>0)
+                                       if($category)
                                         {  echo '<option value="">-Select-</option>'; 
-                                            foreach($q1->result() as $res1)
+                                            foreach($category as $res1)
                                           { 
-                                            $selected = ($category_id==$res1->id)? 'selected' : '';
-                                            echo "<option $selected value='".$res1->id."'>".$res1->category_name."</option>";
+                                            $selected = ($category_id==$res1['id'])? 'selected' : '';
+                                            echo "<option $selected value='".$res1['id']."'>".$res1['category_name']."</option>";
                                           }
                                         }
                                         else
@@ -146,19 +142,17 @@
                                  <span id="category_id_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="unit_id" class="control-label"><?= $this->lang->line('unit'); ?><span class="text-danger">*</span></label>
+                                 <label for="unit_id" class="control-label"><?= lang('app.unit'); ?><span class="text-danger">*</span></label>
                                  <div class="input-group">
                                  <select class="form-control select2" id="unit_id" name="unit_id"  style="width: 100%;" >
                                     <?php
-                                       $query1="select * from db_units where status=1";
-                                       $q1=$this->db->query($query1);
-                                       if($q1->num_rows($q1)>0)
+                                       if($units)
                                         {
                                          echo '<option value="">-Select-</option>'; 
-                                            foreach($q1->result() as $res1)
+                                            foreach($units as $res1)
                                           {
-                                            $selected = ($res1->id==$unit_id)? 'selected' : '';
-                                            echo "<option $selected value='".$res1->id."'>".$res1->unit_name."</option>";
+                                            $selected = ($res1['id']==$unit_id)? 'selected' : '';
+                                            echo "<option $selected value='".$res1['id']."'>".$res1['unit_name']."</option>";
                                           }
                                         }
                                         else
@@ -179,22 +173,22 @@
                                  <span id="sku_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="hsn" ><?= $this->lang->line('hsn'); ?></label>
+                                 <label for="hsn" ><?= lang('app.hsn'); ?></label>
                                  <input type="text" class="form-control" id="hsn" name="hsn" placeholder="" value="<?php print $hsn; ?>" >
                                  <span id="hsn_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="alert_qty" ><?= $this->lang->line('minimum_qty'); ?><span class="text-danger">*</span></label>
+                                 <label for="alert_qty" ><?= lang('app.minimum_qty'); ?><span class="text-danger">*</span></label>
                                  <input type="number" class="form-control" id="alert_qty" name="alert_qty" placeholder="" min="0"  value="<?php print $alert_qty; ?>" >
                                  <span id="alert_qty_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4 hide">
-                                 <label for="lot_number" ><?= $this->lang->line('lot_number'); ?></label>
+                                 <label for="lot_number" ><?= lang('app.lot_number'); ?></label>
                                  <input type="text" class="form-control no_special_char" id="lot_number" name="lot_number" placeholder=""  value="<?php print $lot_number; ?>" >
                                  <span id="lot_number_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="expire_date" ><?= $this->lang->line('expire_date'); ?></label>
+                                 <label for="expire_date" ><?= lang('app.expire_date'); ?></label>
                                  <div class="input-group date">
                                   <div class="input-group-addon">
                                   <i class="fa fa-calendar"></i>
@@ -204,17 +198,17 @@
                                  <span id="expire_date_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="custom_barcode" ><?= $this->lang->line('barcode'); ?></label>
+                                 <label for="custom_barcode" ><?= lang('app.barcode'); ?></label>
                                  <input type="text" class="form-control" id="custom_barcode" name="custom_barcode" placeholder=""  value="<?php print $custom_barcode; ?>" >
                                  <span id="custom_barcode_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="custom_barcode" ><?= $this->lang->line('description'); ?></label>
+                                 <label for="custom_barcode" ><?= lang('app.description'); ?></label>
                                  <textarea type="text" class="form-control" id="description" name="description" placeholder=""><?php print $description; ?></textarea>
                                  <span id="description_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="item_image"><?= $this->lang->line('select_image'); ?></label>
+                                 <label for="item_image"><?= lang('app.select_image'); ?></label>
                                  <input type="file" name="item_image" id="item_image">
                                  <span id="item_image_msg" style="display:block;" class="text-danger">Max Width/Height: 1000px * 1000px & Size: 1MB </span>
                               </div>
@@ -222,24 +216,22 @@
                            <hr>
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="price"><?= $this->lang->line('price'); ?><span class="text-danger">*</span></label>
+                                 <label for="price"><?= lang('app.price'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control only_currency" id="price" name="price" placeholder="Price of Item without Tax"  value="<?php print $price; ?>" >
                                  <span id="price_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4 <?=tax_disable_class()?>">
-                                 <label for="tax_id" ><?= $this->lang->line('tax'); ?><span class="text-danger">*</span></label>
+                                 <label for="tax_id" ><?= lang('app.tax'); ?><span class="text-danger">*</span></label>
                                  <div class="input-group">
                                  <select class="form-control select2" id="tax_id" name="tax_id"  style="width: 100%;" >
                                     <?php
-                                       $query1="SELECT * FROM db_tax WHERE STATUS=1 ORDER BY undelete_bit DESC";
-                                       $q1=$this->db->query($query1);
-                                       if($q1->num_rows($q1)>0)
+                                       if($taxs)
                                         {
                                             //echo '<option data-tax="0" value="">-Select-</option>'; 
-                                            foreach($q1->result() as $res1)
+                                            foreach($taxs as $res1)
                                           { 
-                                            $selected = ($tax_id==$res1->id)? 'selected' : '';
-                                            echo "<option $selected data-tax='".$res1->tax."' value='".$res1->id."'>".$res1->tax_name."(".$res1->tax."%)</option>";
+                                            $selected = ($tax_id==$res1['id'])? 'selected' : '';
+                                            echo "<option $selected data-tax='".$res1['tax']."' value='".$res1['id']."'>".$res1['tax_name']."(".$res1['tax']."%)</option>";
                                           }
                                         }
                                         else
@@ -255,7 +247,7 @@
                                  <span id="tax_id_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="purchase_price"><?= $this->lang->line('purchase_price'); ?><span class="text-danger">*</span></label>
+                                 <label for="purchase_price"><?= lang('app.purchase_price'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control only_currency" id="purchase_price" name="purchase_price" placeholder="Total Price with Tax Amount"  value="<?php print $purchase_price; ?>" readonly='' >
                                  <span id="purchase_price_msg" style="display:none" class="text-danger"></span>
                               </div>
@@ -263,7 +255,7 @@
                            <!-- /row -->
                            <div class="row">
                               <div class="form-group col-md-4 <?=tax_disable_class()?>">
-                                 <label for="tax_type"><?= $this->lang->line('tax_type'); ?><span class="text-danger">*</span></label>
+                                 <label for="tax_type"><?= lang('app.tax_type'); ?><span class="text-danger">*</span></label>
                                  <select class="form-control select2" id="tax_type" name="tax_type"  style="width: 100%;" >
                                   <?php 
                                     $inclusive_selected=$exclusive_selected='';
@@ -278,21 +270,21 @@
                                  
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="profit_margin"><?= $this->lang->line('profit_margin'); ?>(%) <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="<?= $this->lang->line('based_on_purchase_price'); ?>" data-html="true" data-trigger="hover" data-original-title="">
+                                 <label for="profit_margin"><?= lang('app.profit_margin'); ?>(%) <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="<?= lang('app.based_on_purchase_price'); ?>" data-html="true" data-trigger="hover" data-original-title="">
                                   <i class="fa fa-info-circle text-maroon text-black hover-q"></i>
                                 </i></label>
                                  <input type="text" class="form-control only_currency" id="profit_margin" name="profit_margin" placeholder="Profit in %"  value="<?php print $profit_margin; ?>" >
                                  <span id="profit_margin_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="sales_price" class="control-label"><?= $this->lang->line('sales_price'); ?><span class="text-danger">*</span></label>
+                                 <label for="sales_price" class="control-label"><?= lang('app.sales_price'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control only_currency " id="sales_price" name="sales_price" placeholder="Sales Price"  value="<?php print $sales_price; ?>" >
                                  <span id="sales_price_msg" style="display:none" class="text-danger"></span>
                               </div>
                            </div>
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="final_price" class="control-label"><?= $this->lang->line('final_price'); ?><span class="text-danger">*</span></label>
+                                 <label for="final_price" class="control-label"><?= lang('app.final_price'); ?><span class="text-danger">*</span></label>
                                  <input type="text" class="form-control only_currency " id="final_price" name="final_price" placeholder="Final Price"  value="<?php print $final_price; ?>" readonly >
                                  <span id="final_price_msg" style="display:none" class="text-danger"></span>
                               </div>
@@ -301,15 +293,15 @@
                            <hr>
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="discount_type"><?= $this->lang->line('discount_type'); ?></label>
+                                 <label for="discount_type"><?= lang('app.discount_type'); ?></label>
                                  <select class="form-control" id="discount_type" name="discount_type"  style="width: 100%;" >
                                  <option value='Percentage'>Percentage(%)</option>
-                                 <option value='Fixed'>Fixed(<?= $CI->currency() ?>)</option>
+                                 <option value='Fixed'>Fixed(<?= currency() ?>)</option>
                                  </select>
                                  <span id="discount_type_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="discount"><?= $this->lang->line('discount'); ?></label>
+                                 <label for="discount"><?= lang('app.discount'); ?></label>
                                  <input type="text" class="form-control only_currency" id="discount" name="discount" value="<?php print $discount; ?>" >
                                  <span id="discount_msg" style="display:none" class="text-danger"></span>
                               </div>
@@ -318,19 +310,19 @@
                            <hr>
                            <div class="row">
                               <div class="form-group col-md-4">
-                                 <label for="current_opening_stock"><?= $this->lang->line('current_opening_stock'); ?></label>
+                                 <label for="current_opening_stock"><?= lang('app.current_opening_stock'); ?></label>
                                  <input type="text" class="form-control only_currency" id="current_opening_stock" name="current_opening_stock" placeholder="" readonly=""  value="<?php print $stock; ?>" >
                                  <span id="current_opening_stock_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="new_opening_stock"><?= $this->lang->line('adjust_stock'); ?> <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="<?= $this->lang->line('stock_adjustment_msg'); ?>" data-html="true" data-trigger="hover" data-original-title="">
+                                 <label for="new_opening_stock"><?= lang('app.adjust_stock'); ?> <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="<?= lang('app.stock_adjustment_msg'); ?>" data-html="true" data-trigger="hover" data-original-title="">
                                   <i class="fa fa-info-circle text-maroon text-black hover-q"></i>
                                 </i></label>
                                  <input type="text" class="form-control" id="new_opening_stock" name="new_opening_stock" placeholder="-/+"  value="<?php print $new_opening_stock; ?>" >
                                  <span id="new_opening_stock_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
-                                 <label for="adjustment_note" ><?= $this->lang->line('adjustment_note'); ?></label>
+                                 <label for="adjustment_note" ><?= lang('app.adjustment_note'); ?></label>
                                  <textarea type="text" class="form-control" id="adjustment_note" name="adjustment_note" placeholder=""><?php print $adjustment_note; ?></textarea>
                                  <span id="adjustment_note_msg" style="display:none" class="text-danger"></span>
                               </div>
@@ -365,7 +357,7 @@
                               </div>
                            </div>
                            <!-- /.box-footer -->
-                     <?= form_close(); ?>
+                        </form>
                      </div>
                      <!-- /.box -->
                   </div>
@@ -375,7 +367,7 @@
          
                     <div class="box">
                       <div class="box-header">
-                        <h3 class="box-title text-blue"><?= $this->lang->line('opening_stock_adjustment_records'); ?></h3>
+                        <h3 class="box-title text-blue"><?= lang('app.opening_stock_adjustment_records'); ?></h3>
                       </div>
                       <!-- /.box-header -->
                       <div class="box-body table-responsive no-padding">
@@ -384,10 +376,10 @@
                           <thead>
                           <tr class="bg-gray">
                             <th style="">#</th>
-                            <th style=""><?= $this->lang->line('entry_date'); ?></th>
-                            <th style=""><?= $this->lang->line('stock'); ?></th>
-                            <th style=""><?= $this->lang->line('note'); ?></th>
-                            <th style=""><?= $this->lang->line('action'); ?></th>
+                            <th style=""><?= lang('app.entry_date'); ?></th>
+                            <th style=""><?= lang('app.stock'); ?></th>
+                            <th style=""><?= lang('app.note'); ?></th>
+                            <th style=""><?= lang('app.action'); ?></th>
                           </tr>
                           </thead>
                           <tbody>
@@ -408,7 +400,7 @@
                                       $total_qty+=$res3->qty;
                                     }
                                     echo "<tr>
-                                    <td colspan='2' class='text-right text-bold'>".$this->lang->line('total')."</td>
+                                    <td colspan='2' class='text-right text-bold'>".lang('app.total')."</td>
                                     <td>".$total_qty."<td>
                                     <td></td>
 
@@ -446,8 +438,8 @@
       <?php include"comman/code_js_sound.php"; ?>
       <!-- TABLES CODE -->
       <?php include"comman/code_js_form.php"; ?>
-      <script src="<?php echo $theme_link; ?>js/items.js"></script>
-      <script src="<?php echo $theme_link; ?>js/modals.js"></script>
+      <script src="<?= base_url('theme/js/items.js')?>"></script>
+      <script src="<?= base_url('theme/js/modals.js')?>"></script>
       <script>
          $("#discount_type").val('<?=$discount_type; ?>');
       </script>

@@ -19,8 +19,6 @@ $('#save,#update').on("click",function (e) {
              //$('#'+id).css({'background-color' : '#FFFFFF'});    //White color
         }
     }
-
-   
    
     //Validate Input box or selection box should not be blank or empty
 	check_field("item_name");
@@ -54,7 +52,13 @@ $('#save,#update').on("click",function (e) {
 
 					if(confirm("Do You Wants to Save Record ?")){
 						e.preventDefault();
+
+				    const csrfName = $('.txt_csrfname').attr('name');
+				    const csrfHash = $('.txt_csrfname').val();
+
 						data = new FormData($('#items-form')[0]);//form name
+		        data.append([csrfName], csrfHash);
+		        // console.log(csrfName);
 						/*Check XSS Code*/
 						if(!xss_validation(data)){ return false; }
 						
@@ -281,7 +285,7 @@ function calculate_purchase_price(){
 	var purchase_price =parseFloat(0);
 		price =parseFloat(price);
 
-	console.log('tax='+tax);
+	// console.log('tax='+tax);
 	if(tax_type=='Inclusive'){
 			purchase_price =price;
 	}

@@ -10,6 +10,12 @@ use App\Models\DashboardModel;
 use App\Models\ItemsModel;
 use App\Models\PurchaseModel;
 use App\Models\SalesModel;
+use App\Models\BrandModel;
+use App\Models\CategoryModel;
+use App\Models\UnitModel;
+use App\Models\TaxModel;
+use App\Models\PosModel;
+use App\Models\StockModel;
 
 
 /**
@@ -104,6 +110,64 @@ class Services extends BaseService
         }
 
         return new SalesModel();
+    }
+
+
+    public static function brandModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('brandModel');
+        }
+
+        return new BrandModel();
+    }
+
+
+    public static function categoryModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('categoryModel');
+        }
+
+        return new CategoryModel();
+    }
+
+    public static function unitModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('unitModel');
+        }
+
+        return new UnitModel();
+    }
+
+    public static function taxModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('taxModel');
+        }
+
+        return new TaxModel();
+    }
+
+
+    public static function posModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('posModel');
+        }
+
+        return new PosModel();
+    }
+
+
+    public static function stockModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('stockModel');
+        }
+
+        return new StockModel();
     }
 
 

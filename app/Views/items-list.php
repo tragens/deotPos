@@ -31,7 +31,8 @@
     </section>
 
     <!-- Main content -->
-    <?php //= //form_open('#', array('class' => '', 'id' => 'table_form')); ?>
+    <form action="#" id="table_form" method="post">
+    <input type="hidden" class="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
     <input type="hidden" id='base_url' value="<?= base_url() ;?>">
 
     <section class="content">
@@ -48,13 +49,11 @@
                         <label for="brand_id" class=" control-label"><?= lang('app.brand'); ?></label>
                           <select class="form-control select2" id="brand_id" name="brand_id"  style="width: 100%;">
                             <?php
-                               $query1="select * from db_brands where status=1";
-                               $q1=$this->db->query($query1);
-                               if($q1->num_rows($q1)>0)
+                               if($brands)
                                 {  echo '<option value="">-Select-</option>'; 
-                                    foreach($q1->result() as $res1)
+                                    foreach($brands as $res1)
                                   { 
-                                    echo "<option value='".$res1->id."'>".$res1->brand_name."</option>";
+                                    echo "<option value='".$res1['id']."'>".$res1['brand_name']."</option>";
                                   }
                                 }
                                 else
@@ -70,13 +69,12 @@
                         <label for="category_id" class=" control-label"><?= lang('app.category'); ?></label>
                           <select class="form-control select2" id="category_id" name="category_id"  style="width: 100%;">
                             <?php
-                               $query1="select * from db_category where status=1";
-                               $q1=$this->db->query($query1);
-                               if($q1->num_rows($q1)>0)
+
+                               if($category)
                                 {  echo '<option value="">-Select-</option>'; 
-                                    foreach($q1->result() as $res1)
+                                    foreach($category as $res1)
                                   { 
-                                    echo "<option value='".$res1->id."'>".$res1->category_name."</option>";
+                                    echo "<option value='".$res1['id']."'>".$res1['category_name']."</option>";
                                   }
                                 }
                                 else
@@ -92,9 +90,9 @@
                   </div>
                 </div>
 
-              <?php if($CI->permissions('items_add')) { ?>
+              <?php if(has_permission('items_add')) { ?>
               <div class="box-tools">
-                <a class="btn btn-block btn-info " href="<?php echo $base_url; ?>items/add">
+                <a class="btn btn-block btn-info " href="<?= base_url('items/add')?>">
                 <i class="fa fa-plus " ></i> <?= lang('app.new_item'); ?></a>
               </div>
              <?php } ?>
@@ -137,7 +135,7 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
-     <?= form_close();?>
+    </form>
   </div>
   <!-- /.content-wrapper -->
   <?php include"footer.php"; ?>
@@ -161,6 +159,10 @@
 </script>
 <script type="text/javascript">
 function load_datatable(){
+
+    const csrfName = $('.txt_csrfname').attr('name');
+    const csrfHash = $('.txt_csrfname').val();
+
     //datatables
    var table = $('#example2').DataTable({ 
 
@@ -196,9 +198,10 @@ function load_datatable(){
         },
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('items/ajax_list')?>",
+            "url": "<?= base_url('items/ajax_list') ?>",
             "type": "POST",
             "data":{
+              [csrfName]: csrfHash,
               brand_id : $("#brand_id").val(),
               category_id : $("#category_id").val(),
             },

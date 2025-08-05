@@ -32,23 +32,14 @@ class MyCoredata
           // }
             
 
-            // $time_format = (trim($query->row()->time_format)=='24') ? date("h:i:s") : date("h:i:s a");
-            // $date_view_format = trim($query->row()->date_format);
-            // $this->session->set_userdata(array('view_date'  => $date_view_format));
-            // $this->session->set_userdata(array('view_time'  => $query->row()->time_format));
-
             $query =$this->sitesettingsModel->select('site_name,version,language_id,timezone,time_format,date_format,logo')->where('id',1)->first();
             
 
-            //CHECK LANGUAGE IN SESSION ELSE FROM DB
-            // if(!$this->session->has_userdata('language') && $this->session->has_userdata('logged_in') ){
-            //   $this->load->model('language_model');
-            //   $this->language_model->set($query->row()->language_id);
-            // }
-            // if($this->session->has_userdata('logged_in')){
-            //   $this->lang->load($this->session->userdata('language'), $this->session->userdata('language'));
-            // }
-            //End
+            $time_format = (trim($query['time_format'])=='24') ? date("h:i:s") : date("h:i:s a");
+            $date_view_format = trim($query['date_format']);
+            // $this->session->set_userdata(array('view_date'  => $date_view_format));
+            // $this->session->set_userdata(array('view_time'  => $query->row()->time_format));
+
 
             return [
                                 'SITE_TITLE'    => $query['site_name'],
@@ -57,9 +48,9 @@ class MyCoredata
                                 // 'CURRENCY'       => $this->session->userdata('currency'),
                                 // 'CURRENCY_PLACE' => $this->session->userdata('currency_placement'),
                                 // 'CURRENCY_CODE' => $this->session->userdata('currency_code'),
-                                // 'CUR_DATE'      => date("Y-m-d"),
-                                // 'VIEW_DATE'      => $date_view_format,
-                                // 'CUR_TIME'      => $time_format,
+                                'CUR_DATE'      => date("Y-m-d"),
+                                'VIEW_DATE'      => $date_view_format,
+                                'CUR_TIME'      => $time_format,
                                 'SYSTEM_IP'     => $_SERVER['REMOTE_ADDR'],
                                 'SYSTEM_NAME'   => gethostbyaddr($_SERVER['REMOTE_ADDR']),
                                 // 'CUR_USERNAME'  => $this->session->userdata('inv_username'),
