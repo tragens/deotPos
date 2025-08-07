@@ -236,7 +236,12 @@ $(".add_brand").on("click",function(e){
 
       if(confirm("Are you Sure ?")){
         e.preventDefault();
+        const csrfName = $('.txt_csrfname').attr('name');
+        const csrfHash = $('.txt_csrfname').val();
+
         data = new FormData($('#brand_form')[0]);//form name
+        data.append([csrfName], csrfHash);
+
         /*Check XSS Code*/
         if(!xss_validation(data)){ return false; }
         

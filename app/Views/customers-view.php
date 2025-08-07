@@ -22,7 +22,7 @@
         <small>View/Search Customers</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="<?php echo $base_url; ?>dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?= base_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active"><?=$page_title;?></li>
         
       </ol>
@@ -34,8 +34,8 @@
     </div>
     
     <!-- Main content -->
-    <?= form_open('#', array('class' => '', 'id' => 'table_form')); ?>
-    <input type="hidden" id='base_url' value="<?=$base_url;?>">
+    <form action="#" id="table_form" method="post">
+    <input type="hidden" id='base_url' value="<?= base_url();?>">
     <section class="content">
       <div class="row">
          <!-- ********** ALERT MESSAGE START******* -->
@@ -45,10 +45,10 @@
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title"><?=$page_title;?></h3>
-              <?php if($CI->permissions('customers_add')) { ?>
+              <?php if(has_permission('customers_add')) { ?>
               <div class="box-tools">
-                <a class="btn btn-block btn-info" href="<?php echo $base_url; ?>customers/add">
-                <i class="fa fa-plus"></i> <?= $this->lang->line('new_customer'); ?></a>
+                <a class="btn btn-block btn-info" href="<?= base_url('customers/add')?>">
+                <i class="fa fa-plus"></i> <?= lang('app.new_customer'); ?></a>
               </div>
               <?php } ?>
             </div>
@@ -60,15 +60,15 @@
                   <th class="text-center">
                     <input type="checkbox" class="group_check checkbox" >
                   </th>
-                  <th><?= $this->lang->line('customer_id'); ?></th>
-                  <th><?= $this->lang->line('customer_name'); ?></th>
-                  <th><?= $this->lang->line('mobile'); ?></th>
-                  <th><?= $this->lang->line('email'); ?></th>
-                  <th><?= $this->lang->line('total_paid'); ?>(-)</th>
-                  <th><?= $this->lang->line('sales_due'); ?>(-)</th>
-                  <th><?= $this->lang->line('sales_return_due'); ?>(+)</th>
-                  <th><?= $this->lang->line('status'); ?></th>
-                  <th><?= $this->lang->line('action'); ?></th> 
+                  <th><?= lang('app.customer_id'); ?></th>
+                  <th><?= lang('app.customer_name'); ?></th>
+                  <th><?= lang('app.mobile'); ?></th>
+                  <th><?= lang('app.email'); ?></th>
+                  <th><?= lang('app.total_paid'); ?>(-)</th>
+                  <th><?= lang('app.sales_due'); ?>(-)</th>
+                  <th><?= lang('app.sales_return_due'); ?>(+)</th>
+                  <th><?= lang('app.status'); ?></th>
+                  <th><?= lang('app.action'); ?></th> 
                 </tr>
                 </thead>
                 <tbody>
@@ -95,7 +95,7 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
-     <?= form_close();?>
+    </form>
   </div>
   <!-- /.content-wrapper -->
   <?php include"footer.php"; ?>
@@ -110,7 +110,7 @@
 <!-- TABLES CODE -->
 <?php include"comman/code_js_datatable.php"; ?>
 <!-- bootstrap datepicker -->
-<script src="<?php echo $theme_link; ?>plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="<?= base_url('theme/plugins/datepicker/bootstrap-datepicker.js')?>"></script>
 <script type="text/javascript">
   //Date picker
     $('.datepicker').datepicker({
@@ -224,7 +224,7 @@ $(document).ready(function() {
 });
 </script>
 
-<script src="<?php echo $theme_link; ?>js/customers.js"></script>
+<script src="<?= base_url('theme/js/customers.js')?>"></script>
 <!-- Make sidebar menu hughlighter/selector -->
 <script>$(".<?php echo basename(__FILE__,'.php');?>-active-li").addClass("active");</script>
 

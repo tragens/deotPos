@@ -104,10 +104,9 @@
                     <label for="payment_type_1">Payment Type</label>
                     <select class="form-control" id='payment_type_1' name="payment_type_1">
                       <?php
-                        $q1=$this->db->query("select * from db_paymenttypes where status=1");
-                         if($q1->num_rows()>0){
-                             foreach($q1->result() as $res1){
-                             echo "<option value='".$res1->payment_type."'>".$res1->payment_type ."</option>";
+                         if($paytypes){
+                             foreach($paytypes as $res1){
+                             echo "<option value='".$res1['payment_type']."'>".$res1['payment_type'] ."</option>";
                            }
                          }
                          else{

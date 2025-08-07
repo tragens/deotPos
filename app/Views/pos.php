@@ -5,7 +5,7 @@
 <!-- TABLES CSS CODE -->
 <?php include"comman/code_css_form.php"; ?>
 <!-- iCheck -->
-  <link rel="stylesheet" href="<?php echo $theme_link; ?>plugins/iCheck/square/blue.css">
+  <link rel="stylesheet" href="<?= base_url('theme/plugins/iCheck/square/blue.css')?>">
 
   <style type="text/css">
     .select2-container--default .select2-selection--single{
@@ -78,7 +78,6 @@
       $("body").addClass('sidebar-collapse');
     }
   </script> 
-  <?php $CI =& get_instance(); ?>
 <div class="wrapper">
   
   
@@ -86,7 +85,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="<?php echo $base_url; ?>dashboard" class="navbar-brand" title="Go to Dashboard!"><b class="hidden-xs"><?php  echo $SITE_TITLE;?></b><b class="hidden-lg">POS</b></a>
+          <a href="<?= base_url('dashboard')?>" class="navbar-brand" title="Go to Dashboard!"><b class="hidden-xs"><?php  echo $SITE_TITLE;?></b><b class="hidden-lg">POS</b></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -95,14 +94,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <?php if($CI->permissions('sales_view')) { ?>
-            <li class=""><a href="<?php echo $base_url; ?>sales" title="View Sales List!"><i class="fa fa-list text-yellow" ></i> <span><?= $this->lang->line('sales_list'); ?></span></a></li>
+            <?php if(has_permission('sales_view')) { ?>
+            <li class=""><a href="<?= base_url('sales')?>" title="View Sales List!"><i class="fa fa-list text-yellow" ></i> <span><?= lang('app.sales_list'); ?></span></a></li>
             <?php } ?>
-            <?php if($CI->permissions('sales_add')) { ?>
-            <li class=""><a href="<?php echo $base_url; ?>pos" title="Create New POS Invoice"><i class="fa fa-calculator text-yellow " ></i> <span><?= $this->lang->line('new_invoice'); ?></span></a></li>
+            <?php if(has_permission('sales_add')) { ?>
+            <li class=""><a href="<?= base_url('pos" title="Create New POS Invoice')?>"><i class="fa fa-calculator text-yellow " ></i> <span><?= lang('app.new_invoice'); ?></span></a></li>
             <?php } ?>
-            <?php if($CI->permissions('items_view')) { ?>
-            <li class=""><a href="<?php echo $base_url; ?>items/" title="View Items List"><i class="fa  fa-cubes text-yellow " ></i> <span><?= $this->lang->line('items_list'); ?></span></a></li>
+            <?php if(has_permission('items_view')) { ?>
+            <li class=""><a href="<?= base_url('items/')?>" title="View Items List"><i class="fa  fa-cubes text-yellow " ></i> <span><?= lang('app.items_list'); ?></span></a></li>
             <?php } ?>
           </ul>
         </div>
@@ -115,7 +114,7 @@
             <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Click To View Hold Invoices">
              
-              <span class=""><?= $this->lang->line('hold_list'); ?></span>
+              <span class=""><?= lang('app.hold_list'); ?></span>
               <span class="label label-danger hold_invoice_list_count"><?=$tot_count?></span>
             </a>
 
@@ -148,14 +147,14 @@
             <!-- Messages: style can be found in dropdown.less-->
             <li class="hidden-xs" id="fullscreen"><a title="Fullscreen On/Off"><i class="fa fa-tv text-white" ></i> </a></li>
             <li class="text-center" id="">
-            <a title="Dashboard" href="<?php echo $base_url; ?>dashboard"><i class="fa fa-dashboard text-yellow" ></i><b class="hidden-xs"><?= $this->lang->line('dashboard'); ?></b></a>
+            <a title="Dashboard" href="<?= base_url('dashboard')?>"><i class="fa fa-dashboard text-yellow" ></i><b class="hidden-xs"><?= lang('app.dashboard'); ?></b></a>
           </li>
 
             <!-- User Account Menu -->
             <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?php echo get_profile_picture(); ?>" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php print ucfirst($this->session->userdata('inv_username')); ?></span>
+              <span class="hidden-xs"><?php print ucfirst($session->get('inv_username')); ?></span>
             </a>
 
             <ul class="dropdown-menu">
@@ -164,7 +163,7 @@
                 <img src="<?php echo get_profile_picture(); ?>" class="img-circle" alt="User Image">
 
                 <p>
-                 <?php print ucfirst($this->session->userdata('inv_username')); ?>
+                 <?php print ucfirst($session->get('inv_username')); ?>
                   <small>Year <?=date("Y");?></small>
                 </p>
               </li>
@@ -172,10 +171,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="<?php echo $base_url; ?>users/edit/<?= $this->session->userdata('inv_userid'); ?>" class="btn btn-default btn-flat">Profile</a>
+                  <a href="<?= base_url('users/edit/'. $session->get('inv_userid')); ?>" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?php echo $base_url; ?>logout" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?= base_url('Login/logout')?>" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -188,7 +187,7 @@
     </nav>
   </header>
 
-  <?php $css = ($this->session->userdata('language')=='Arabic' || $this->session->userdata('language')=='Urdu') ? 'margin-right: 0 !important;': '';?>
+  <?php $css = ($session->get('language')=='Arabic' || $session->get('language')=='Urdu') ? 'margin-right: 0 !important;': '';?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="<?=$css;?>">
@@ -227,7 +226,7 @@
                 </div>
                   
                 <?php if(isset($sales_id)): ?>
-                  <?php if($CI->permissions('sales_add')) { ?>
+                  <?php if(has_permission('sales_add')) { ?>
                   <div class="col-md-4 pull-right">
                     <a href='<?= $base_url;?>pos' class="btn btn-primary pull-right">New Invoice</a>
                   </div>
@@ -243,10 +242,10 @@
           </div>
             <!-- /.box-header -->
             
-              <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+              <input type="hidden" class="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
               <input type="hidden" value='0' id="hidden_rowcount" name="hidden_rowcount">
               <input type="hidden" value='' id="hidden_invoice_id" name="hidden_invoice_id">
-              <input type="hidden" id="base_url" value="<?php echo $base_url;; ?>">
+              <input type="hidden" id="base_url" value="<?= base_url(); ?>">
 
               <input type="hidden" value='' id="temp_customer_id" name="temp_customer_id">
               
@@ -264,8 +263,7 @@
                     </div>
                     <div class="modal-body">
                       <?php 
-                      $discount_input = $this->db->select("sales_discount")->get('db_sitesettings')->row()->sales_discount;
-                    $discount_input = ($discount_input==0) ? '' : $discount_input;
+                        $discount_input = ($sales_discount==0) ? '' : $sales_discount;
                       ?>
                         <div class="row">
                           <div class="col-md-6">
@@ -342,13 +340,13 @@
                     <div class="col-sm-12" style="overflow-y:auto;border:1px solid #337ab7;" >
                       <table class="table table-condensed table-bordered table-striped table-responsive items_table" style="">
                         <thead class="bg-primary">
-                          <th width="30%"><?= $this->lang->line('item_name'); ?></th>
-                          <th width="10%"><?= $this->lang->line('stock'); ?></th>
-                          <th width="25%"><?= $this->lang->line('quantity'); ?></th>
-                          <th width="15%"><?= $this->lang->line('price'); ?></th>
-                          <th width="10%"><?= $this->lang->line('discount'); ?></th>
-                          <th width="10%" class='<?=tax_disable_class()?>'><?= $this->lang->line('tax'); ?></th>
-                          <th width="15%"><?= $this->lang->line('subtotal'); ?></th>
+                          <th width="30%"><?= lang('app.item_name'); ?></th>
+                          <th width="10%"><?= lang('app.stock'); ?></th>
+                          <th width="25%"><?= lang('app.quantity'); ?></th>
+                          <th width="15%"><?= lang('app.price'); ?></th>
+                          <th width="10%"><?= lang('app.discount'); ?></th>
+                          <th width="10%" class='<?=tax_disable_class()?>'><?= lang('app.tax'); ?></th>
+                          <th width="15%"><?= lang('app.subtotal'); ?></th>
                           <th width="5%"><i class="fa fa-close"></i></th>
                         </thead>
                         <tbody id="pos-form-tbody" style="font-size: 16px;font-weight: bold;overflow: scroll;">
@@ -369,20 +367,20 @@
                       <?php 
                          //Change Return
                           $send_sms_checkbox='disabled';
-                          if($CI->is_sms_enabled()){
-                            if(!isset($sales_id)){
-                              $send_sms_checkbox='checked';  
-                            }else{
-                              $send_sms_checkbox='';
-                            }
-                          }
+                          // if(is_sms_enabled()){
+                          //   if(!isset($sales_id)){
+                          //     $send_sms_checkbox='checked';  
+                          //   }else{
+                          //     $send_sms_checkbox='';
+                          //   }
+                          // }
                           $other_charges = '';//(isset($sales_id)) ? $other_charges : "";
                     ?>
               <div class="row">
                     <div class="col-xs-12 ">
                       <div class="col-md-6">
                            <div class="checkbox icheck">
-                              <input type="checkbox" <?=$send_sms_checkbox;?> class="form-control" id="send_sms" name="send_sms" > <label for="sales_discount" class=" control-label"><label for='send_sms'><?= $this->lang->line('send_sms_to_customer'); ?></label>
+                              <input type="checkbox" <?=$send_sms_checkbox;?> class="form-control" id="send_sms" name="send_sms" > <label for="sales_discount" class=" control-label"><label for='send_sms'><?= lang('app.send_sms_to_customer'); ?></label>
                                 <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="If checkbox is Disabled! You need to enable it from SMS -> SMS API <br><b>Note:<i>Walk-in Customer will not receive SMS!</i></b>" data-html="true" data-trigger="hover" data-original-title="" title="Do you wants to send SMS ?">
                                   <i class="fa fa-info-circle text-maroon text-black hover-q"></i>
                                 </i>
@@ -391,7 +389,7 @@
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
-                              <label for="other_charges" class="col-sm-7 control-label"><?= $this->lang->line('other_charges'); ?><label class="text-danger">*</label></label>
+                              <label for="other_charges" class="col-sm-7 control-label"><?= lang('app.other_charges'); ?><label class="text-danger">*</label></label>
 
                           <div class="col-sm-5">
                             <input type="text" class="form-control text-right" id="other_charges" name="other_charges" placeholder="0.00"  value="<?=$other_charges?>">
@@ -408,20 +406,20 @@
               <div class="box-footer bg-gray">
                 <div class="row">
                   <div class="col-md-3 text-right">
-                          <label> <?= $this->lang->line('quantity'); ?>:</label><br>
+                          <label> <?= lang('app.quantity'); ?>:</label><br>
                           <span class="text-bold tot_qty"></span>
                   </div>
                   <div class="col-md-3 text-right">
-                          <label><?= $this->lang->line('total_amount'); ?>:</label><br>
-                          <?= $CI->currency('<span style="font-size: 19px;" class="tot_amt text-bold"></span>');?>
+                          <label><?= lang('app.total_amount'); ?>:</label><br>
+                          <?= currency('<span style="font-size: 19px;" class="tot_amt text-bold"></span>');?>
                   </div>
                   <div class="col-md-3 text-right">
-                          <label><?= $this->lang->line('total_discount'); ?>:<a class="fa fa-pencil-square-o cursor-pointer" data-toggle="modal" data-target="#discount-modal"></a></label><br>
-                          <?= $CI->currency('<span style="font-size: 19px;" class="tot_disc text-bold"></span>');?>
+                          <label><?= lang('app.total_discount'); ?>:<a class="fa fa-pencil-square-o cursor-pointer" data-toggle="modal" data-target="#discount-modal"></a></label><br>
+                          <?= currency('<span style="font-size: 19px;" class="tot_disc text-bold"></span>');?>
                   </div>
                   <div class="col-md-3 text-right">
-                          <label><?= $this->lang->line('grand_total'); ?>:</label><br>
-                          <?= $CI->currency('<span style="font-size: 19px;" class="tot_grand text-bold"></span>');?>
+                          <label><?= lang('app.grand_total'); ?>:</label><br>
+                          <?= currency('<span style="font-size: 19px;" class="tot_grand text-bold"></span>');?>
                   </div>
                 </div>
                
@@ -482,14 +480,12 @@
                   <div class="input-group input-group-md">
                       <select class="form-control select2" id="category_id" name="category_id"  style="width: 100%;"  >
                       <?php
-                      $query1="select * from db_category where status=1";
-                      $q1=$this->db->query($query1);
                       echo '<option value="">All Categories</option>';
-                      if($q1->num_rows($q1)>0)
+                      if($category)
                        {   
-                           foreach($q1->result() as $res1)
+                           foreach($category as $res1)
                          {
-                           echo "<option value='".$res1->id."'>".$res1->category_name."</option>";
+                           echo "<option value='".$res1['id']."'>".$res1['category_name']."</option>";
                          }
                        }
                        else
@@ -511,14 +507,12 @@
                   <div class="input-group input-group-md">
                       <select class="form-control select2" id="brand_id" name="brand_id"  style="width: 100%;"  >
                       <?php
-                      $query1="select * from db_brands where status=1";
-                      $q1=$this->db->query($query1);
                       echo '<option value="">All Brands</option>';
-                      if($q1->num_rows($q1)>0)
+                      if($brands)
                        {   
-                           foreach($q1->result() as $res1)
+                           foreach($brands as $res1)
                          {
-                           echo "<option value='".$res1->id."'>".$res1->brand_name."</option>";
+                           echo "<option value='".$res1['id']."'>".$res1['brand_name']."</option>";
                          }
                        }
                        else
@@ -608,16 +602,16 @@
 <?php include"comman/code_js_form.php"; ?>
 
 <!-- iCheck -->
-<script src="<?php echo $theme_link; ?>plugins/iCheck/icheck.min.js"></script>
+<script src="<?= base_url("theme/plugins/iCheck/icheck.min.js")?>"></script>
 
-<script src="<?php echo $theme_link; ?>js/fullscreen.js"></script>
-<script src="<?php echo $theme_link; ?>js/modals.js"></script>
-<script src="<?php echo $theme_link; ?>js/pos.js"></script>
-<script src="<?php echo $theme_link; ?>js/ajaxselect/customer_select_ajax.js"></script>  
+<script src="<?= base_url("theme/js/fullscreen.js")?>"></script>
+<script src="<?= base_url("theme/js/modals.js")?>"></script>
+<script src="<?= base_url("theme/js/pos.js")?>"></script>
+<script src="<?= base_url("theme/js/ajaxselect/customer_select_ajax.js")?>"></script>  
 
 
 <!-- DROP DOWN -->
-<script src="<?php echo $theme_link; ?>dist/js/bootstrap3-typeahead.min.js"></script>  
+<script src="<?= base_url("theme/dist/js/bootstrap3-typeahead.min.js")?>"></script>  
 <!-- DROP DOWN END-->
 
 
@@ -673,7 +667,7 @@
 //REMOTELY FETCH THE ALL ITEMS OR CATEGORY WISE ITEMS.
 function get_details(){
   /*$(".box").append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
-  $.post("<?php echo $base_url; ?>pos/get_details",{id:$("#category_id").val()},function(result){
+  $.post("< ?= base_url('pos/get_details",{id:$("#category_id").val()},function(result){
     $(".search_div").html('');
     $(".search_div").html(result);
     $(".overlay").remove();
@@ -681,7 +675,7 @@ function get_details(){
 }
 
 //LEFT SIDE: ON CLICK ITEM ADD TO INVOICE LIST
-function addrow(id='',item_obj=''){
+function addrow(id = '', item_obj = '') {
 
     //CHECK SAME ITEM ALREADY EXIST IN ITEMS TABLE 
     
@@ -1144,7 +1138,7 @@ $(document).ready(function(){
 function get_item_details(item_id){
 
   $(".box").append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
-  $.post("<?php echo $base_url; ?>pos/get_item_details",{item_id:item_id},function(result){
+  $.post("<?= base_url('pos/get_item_details')?>",{item_id:item_id},function(result){
     //console.log(result);
     var item = jQuery.parseJSON(result);
 
@@ -1463,7 +1457,7 @@ function load_next_details(){
 
 function get_details(last_id='',show_only_searched=false){
   $.ajax({
-      url: '<?php echo $base_url; ?>pos/get_details',
+      url: '<?= base_url('pos/get_details')?>',
       type: "post",
       data:{
         last_id       : (!show_only_searched) ? last_id : '',

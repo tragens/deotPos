@@ -318,12 +318,12 @@
                                  <label for="new_opening_stock"><?= lang('app.adjust_stock'); ?> <i class="hover-q " data-container="body" data-toggle="popover" data-placement="top" data-content="<?= lang('app.stock_adjustment_msg'); ?>" data-html="true" data-trigger="hover" data-original-title="">
                                   <i class="fa fa-info-circle text-maroon text-black hover-q"></i>
                                 </i></label>
-                                 <input type="text" class="form-control" id="new_opening_stock" name="new_opening_stock" placeholder="-/+"  value="<?php print $new_opening_stock; ?>" >
+                                 <input type="text" class="form-control" id="new_opening_stock" name="new_opening_stock" placeholder="-/+"  value="<?php print $new_opening_stock??''; ?>" >
                                  <span id="new_opening_stock_msg" style="display:none" class="text-danger"></span>
                               </div>
                               <div class="form-group col-md-4">
                                  <label for="adjustment_note" ><?= lang('app.adjustment_note'); ?></label>
-                                 <textarea type="text" class="form-control" id="adjustment_note" name="adjustment_note" placeholder=""><?php print $adjustment_note; ?></textarea>
+                                 <textarea type="text" class="form-control" id="adjustment_note" name="adjustment_note" placeholder=""><?php print $adjustment_note??''; ?></textarea>
                                  <span id="adjustment_note_msg" style="display:none" class="text-danger"></span>
                               </div>
                            </div>
@@ -385,19 +385,18 @@
                           <tbody>
                               <?php 
                                 if(isset($q_id)){
-                                  $q3 = $this->db->query("select * from db_stockentry where item_id=$q_id");
-                                  if($q3->num_rows()>0){
+                                  if($stock_fetch){
                                     $i=1;
                                     $total_qty = 0;
-                                    foreach ($q3->result() as $res3) {
+                                    foreach ($stock_fetch as $res3) {
                                       echo "<td>".$i."</td>";
-                                      echo "<td>".show_date($res3->entry_date)."</td>";
-                                      echo "<td>".$res3->qty."</td>";
-                                      echo "<td>".$res3->note."</td>";
-                                      echo '<td><i class="fa fa-trash text-red pointer" onclick="delete_stock_entry('.$res3->id.')"> Delete</i></td>';
+                                      echo "<td>".show_date($res3['entry_date'])."</td>";
+                                      echo "<td>".$res3['qty']."</td>";
+                                      echo "<td>".$res3['note']."</td>";
+                                      echo '<td><i class="fa fa-trash text-red pointer" onclick="delete_stock_entry('.$res3['id'].')"> Delete</i></td>';
                                       echo "</tr>";
                                       $i++;
-                                      $total_qty+=$res3->qty;
+                                      $total_qty+=$res3['qty'];
                                     }
                                     echo "<tr>
                                     <td colspan='2' class='text-right text-bold'>".lang('app.total')."</td>

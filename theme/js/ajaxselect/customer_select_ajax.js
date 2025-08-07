@@ -2,7 +2,7 @@
 
 var base_url = $("#base_url").val();
 
-var url_ = base_url+"customers/getCustomers/";
+var url_ = base_url+"customers/getCustomers";
 
 var searchFor = "Search Name/Mobile";
 

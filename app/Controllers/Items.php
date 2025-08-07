@@ -16,6 +16,7 @@ class Items extends BaseController
     protected $taxModel;
     protected $posModel;
     protected $stockModel;
+    
 
     function __construct()
     {
@@ -349,10 +350,17 @@ public function stock_entry($entry_date, $item_id, $qty = 0, $note = '')
         $this->coredata->permission_check('items_view');
         $data1 = $this->coredata->load_info();
         $data2 = $this->request->getPost();
-        $result=$this->get_details($id,$data);
-        $data=array_merge($data,$result);
-        $data['page_title']=$this->lang->line('items');
-        $this->load->view('items', $data);
+        $result=$this->get_details($id,$data1);
+        $data=array_merge($data2,$result);
+        $data['page_title']=lang('app.items');
+        $data['session'] = \Config\Services::session();
+        $data['brands'] = $this->brandModel->where('status', 1)->findAll();
+        $data['category'] = $this->categoryModel->where('status', 1)->findAll();
+        $data['units'] = $this->unitModel->where('status', 1)->findAll();
+        $data['taxs'] = $this->taxModel->where('status', 1)->orderBy('undelete_bit', 'ASC')->findAll();
+        $data['stock_fetch'] = $this->stockModel->where('status', $data['q_id'])->findAll();
+
+        return view('items', $data);
     }
 
 public function get_details($id, array $data = [])
@@ -392,5 +400,153 @@ public function get_details($id, array $data = [])
 
     return $data;
 }
+
+    public function update_items(){
+
+        $validationRules = [
+            'item_name'       => ['label' => 'Item Name', 'rules' => 'required|trim'],
+            'category_id'     => ['label' => 'Category Name', 'rules' => 'required|trim'],
+            'unit_id'         => ['label' => 'Unit', 'rules' => 'required|trim'],
+            'price'           => ['label' => 'Item Price', 'rules' => 'required|trim|numeric'],
+            'tax_id'          => ['label' => 'Tax', 'rules' => 'required|trim'],
+            'purchase_price'  => ['label' => 'Purchase Price', 'rules' => 'required|trim|numeric'],
+            'sales_price'     => ['label' => 'Sales Price', 'rules' => 'required|trim|numeric'],
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return "Please Fill Compulsory(* marked) Fields.";
+        }
+
+        // Only get necessary and clean data
+        $data = $this->request->getVar();
+
+        $result = $this->update_item($data);
+        return $result;
+    }
+
+public function update_item($data)
+{
+    $request = \Config\Services::request();
+    $imageService = \Config\Services::image();
+    $file_name = '';
+
+    // Begin Transaction
+    $this->db->transStart();
+
+    // Handle File Upload
+    $image = $request->getFile('item_image');
+    if ($image && $image->isValid() && !$image->hasMoved()) {
+        $newName = time() . '.' . $image->getExtension();
+        $uploadPath = FCPATH . 'uploads/items/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0755, true);
+        }
+
+        $image->move($uploadPath, $newName);
+        $file_name = 'uploads/items/' . $newName;
+
+        // Create thumbnail
+        $imageService->withFile($uploadPath . $newName)
+                     ->resize(75, 50, true, 'height')
+                     ->save($uploadPath . 'thumb_' . $newName);
+    }
+
+    // Prepare insert data
+    $insertData = [
+        'item_code'        => $data['item_code'] ?? '',
+        'item_name'        => $data['item_name'],
+        'brand_id'         => $data['brand_id'] ?? null,
+        'category_id'      => $data['category_id'],
+        'sku'              => $data['sku'] ?? null,
+        'hsn'              => $data['hsn'] ?? null,
+        'unit_id'          => $data['unit_id'],
+        'alert_qty'        => $data['alert_qty'] ?? 0,
+        'lot_number'       => $data['lot_number'] ?? null,
+        'expire_date'      => $data['expire_date'],
+        'price'            => $data['price'],
+        'tax_id'           => $data['tax_id'],
+        'purchase_price'   => $data['purchase_price'],
+        'tax_type'         => $data['tax_type'] ?? '',
+        'profit_margin'    => $data['profit_margin'] ?? null,
+        'sales_price'      => $data['sales_price'],
+        'custom_barcode'   => $data['custom_barcode'] ?? null,
+        'final_price'      => $data['final_price'] ?? null,
+        'description'      => $data['description'] ?? '',
+        'discount'         => $data['discount'] ?? 0,
+        'discount_type'    => $data['discount_type'] ?? null,
+        'item_image'       => $file_name,
+    ];
+
+    $update = $this->itemsModel->update($data['q_id'], $insertData);
+
+    if (!$update) {
+        $this->db->transRollback();
+        return 'failed';
+    }
+
+    // Handle opening stock
+    $opening_stock = $request->getVar('new_opening_stock');
+    if (!empty($opening_stock) && $opening_stock != 0) {
+        $adjustment_note = $request->getVar('adjustment_note') ?? '';
+
+        if (!$this->stock_entry(date('Y-m-d'), $data['q_id'], $opening_stock, $adjustment_note)) {
+            $this->db->transRollback();
+            return 'failed';
+        }
+    }
+
+    if (!$this->posModel->update_items_quantity($data['q_id'])) {
+        $this->db->transRollback();
+        return 'failed';
+    }
+
+    $this->db->transCommit();
+
+    session()->setFlashdata('success', 'Success! item updated successfully.');
+    return 'success';
+}
+
+
+
+
+    //Used in Purchase and sales Forms
+public function get_json_items_details()
+{
+    $display_json = [];
+
+    // Check if 'name' is passed in GET request
+    if (!empty($this->request->getGet('name'))) {
+        $name = strtolower(trim($this->request->getGet('name')));
+
+        // Proper use of CI4 Query Builder with LIKE
+        $builder = $this->itemsModel->builder();
+        $builder->select('id, item_name, item_code, stock');
+        $builder->where('status', 1);
+        $builder->groupStart()
+            ->like('LOWER(item_name)', $name)
+            ->orLike('LOWER(item_code)', $name)
+            ->orLike('LOWER(custom_barcode)', $name)
+        ->groupEnd();
+        $builder->limit(10);
+
+        $query = $builder->get();
+        $results = $query->getResultArray();
+
+        foreach ($results as $res) {
+            $display_json[] = [
+                "id"        => $res['id'],
+                "value"     => $res['item_name'],
+                "label"     => $res['item_name'],
+                "item_code" => $res['item_code'],
+                "stock"     => $res['stock']??0
+            ];
+        }
+    }
+
+    return $this->response->setJSON($display_json);
+}
+
+
+
 
 }

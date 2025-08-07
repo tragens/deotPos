@@ -5,14 +5,14 @@
             <div class="modal-header header-custom">
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">×</span></button>
-               <h4 class="modal-title text-center"><?= $this->lang->line('manage_sales_item'); ?></h4>
+               <h4 class="modal-title text-center"><?= lang('app.manage_sales_item'); ?></h4>
             </div>
             <div class="modal-body">
                <div class="row">
                   <div class="col-md-12">
                      <div class="row invoice-info">
                         <div class="col-sm-6 invoice-col">
-                           <b><?= $this->lang->line('item_name'); ?> : </b> <span id='popup_item_name'><span>
+                           <b><?= lang('app.item_name'); ?> : </b> <span id='popup_item_name'><span>
                         </div>
                         <!-- /.col -->
                      </div>
@@ -28,7 +28,7 @@
                                     
                                     <div class="col-md-6 <?=tax_disable_class()?>">
                                         <div class="form-group">
-                                          <label for="popup_tax_type"><?= $this->lang->line('tax_type'); ?></label>
+                                          <label for="popup_tax_type"><?= lang('app.tax_type'); ?></label>
                                          <select class="form-control" id="popup_tax_type" name="popup_tax_id"  style="width: 100%;" >
                                           <option value="Exclusive">Exclusive</option>
                                            <option value="Inclusive">Inclusive</option>
@@ -39,17 +39,15 @@
 
                                     <div class="col-md-6 <?=tax_disable_class()?>">
                                         <div class="form-group">
-                                          <label for="popup_tax_id"><?= $this->lang->line('tax'); ?></label>
+                                          <label for="popup_tax_id"><?= lang('app.tax'); ?></label>
                                          <select class="form-control" id="popup_tax_id" name="popup_tax_id"  style="width: 100%;" >
                                             <?php
-                                            $query2="select * from db_tax where status=1";
-                                            $q2=$this->db->query($query2);
-                                            if($q2->num_rows()>0)
+                                            if($tax)
                                              {
                                               echo '<option value="">-Select-</option>'; 
-                                              foreach($q2->result() as $res1)
+                                              foreach($tax as $res1)
                                                {
-                                                 echo "<option data-tax='".$res1->tax."' data-tax-value='".$res1->tax_name."' value='".$res1->id."'>".$res1->tax_name."</option>";
+                                                 echo "<option data-tax='".$res1['tax']."' data-tax-value='".$res1['tax_name']."' value='".$res1['id']."'>".$res1['tax_name']."</option>";
                                                }
                                              }
                                              else
@@ -66,17 +64,17 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                          <label for="item_discount_type"><?= $this->lang->line('discount_type'); ?></label>
+                                          <label for="item_discount_type"><?= lang('app.discount_type'); ?></label>
                                          <select class="form-control" id="item_discount_type" name="item_discount_type"  style="width: 100%;" >
                                           <option value='Percentage'>Percentage(%)</option>
-                                          <option value='Fixed'>Fixed(<?= $CI->currency() ?>)</option>
+                                          <option value='Fixed'>Fixed(<?= currency() ?>)</option>
                                           </select>
                                         </div>
                                    
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                          <label for="item_discount_input"><?= $this->lang->line('discount'); ?></label>
+                                          <label for="item_discount_input"><?= lang('app.discount'); ?></label>
                                         <input type="text" class="form-control only_currency" id="item_discount_input" name="item_discount_input" placeholder="" value="0">
                                         </div>
                                    
@@ -85,7 +83,7 @@
 
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                          <label for="popup_tax_type"><?= $this->lang->line('description'); ?></label>
+                                          <label for="popup_tax_type"><?= lang('app.description'); ?></label>
                                          <textarea type="text" class="form-control" id="popup_description" placeholder=""></textarea>
                                         </div>
                                    

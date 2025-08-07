@@ -62,5 +62,42 @@ class PosModel extends Model{
         return $update;
     }
 
+
+    public function hold_invoice_list()
+    {
+        // Access incoming POST data directly
+        $data = $_POST;  // Example: you could use $this->request->getPost() in a real-world scenario
+
+        $i = 0;
+        $str = '';
+
+        // Fetch data from the database using CI4's DB class
+        $builder = $this->db->table('db_hold');
+        $query = $builder->orderBy('id', 'desc')->get();
+
+        // Check if any records are found
+        if ($query->getNumRows() > 0) {
+            foreach ($query->getResult() as $res2) {
+                $str .= "<tr>";
+                $str .= "<td>" . $res2->id . "</td>";
+                $str .= "<td>" . show_date($res2->sales_date) . "</td>";
+                $str .= "<td>" . $res2->reference_id . "</td>";
+                $str .= "<td>";
+                $str .= '<a class="fa fa-fw fa-trash-o text-red" style="cursor: pointer;font-size: 20px;" onclick="hold_invoice_delete(' . $res2->id . ')" title="Delete Invoice?"></a>';
+                $str .= '<a class="fa fa-fw fa-edit text-success" style="cursor: pointer;font-size: 20px;" onclick="hold_invoice_edit(' . $res2->id . ')" title="Edit Invoice?"></a>';
+                $str .= "</td>";
+                $str .= "</tr>";
+                $i++;
+            }
+        } else {
+            $str .= "<tr>";
+            $str .= '<td colspan="4" class="text-danger text-center">No Records Found</td>';
+            $str .= '</tr>';
+        }
+
+        return $str;
+    }
+
+
 }
 

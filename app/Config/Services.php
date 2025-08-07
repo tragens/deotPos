@@ -16,6 +16,12 @@ use App\Models\UnitModel;
 use App\Models\TaxModel;
 use App\Models\PosModel;
 use App\Models\StockModel;
+use App\Models\HoldModel;
+use App\Models\CountryModel;
+use App\Models\StatesModel;
+use App\Models\paymenttypesModel;
+use App\Models\CustomerModel; 
+use App\Models\CompanyModel; 
 
 
 /**
@@ -168,6 +174,66 @@ class Services extends BaseService
         }
 
         return new StockModel();
+    }
+
+
+    public static function holdModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('holdModel');
+        }
+
+        return new HoldModel();
+    }
+
+
+    public static function countryModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('countryModel');
+        }
+
+        return new CountryModel();
+    }
+
+
+    public static function statesModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('statesModel');
+        }
+
+        return new StatesModel();
+    }
+
+
+    public static function paymenttypesModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('paymenttypesModel');
+        }
+
+        return new PaymenttypesModel();
+    }
+
+
+    public static function customerModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('customerModel');
+        }
+
+        return new customerModel();
+    }
+
+
+    public static function companyModel(bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('companyModel');
+        }
+
+        return new CompanyModel();
     }
 
 

@@ -101,7 +101,7 @@
           
           <?php if(has_permission('pos')) { ?>
           <li class="text-center" id="">
-            <a title="POS [Shift+P]" href="<?= base_url('pos')?>')?>"><i class="fa fa-plus-square " ></i> POS </a>   
+            <a title="POS [Shift+P]" href="<?= base_url('pos')?>"><i class="fa fa-plus-square " ></i> POS </a>   
           </li>
           <?php } ?>
 
